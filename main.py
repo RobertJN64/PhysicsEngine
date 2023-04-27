@@ -42,6 +42,7 @@ force_scale_f = 0.01
 import matplotlib.pyplot as pyplot
 vel_fig = pyplot.figure(figsize=(12, 8))
 vel_ax = vel_fig.add_subplot()
+#endregion
 
 #region STEP 1: Generate Points
 assert -start_x < length and end_x < length, "Pendulum too short"
@@ -128,6 +129,8 @@ for n in range(2, n_points - 2):
     if ENABLE_MG_VECTORS:
         vel_ax.arrow(x, y, 0, MG_y * force_scale_f,
                      head_width=0.03, head_length=0.03, color='black', length_includes_head=True)
+
+#endregion
 
 vel_ax.set_xlim(-1, 1)
 vel_ax.set_ylim(-1.1, 0.3)
