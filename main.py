@@ -24,8 +24,8 @@ ENABLE_ACCEL_VECTORS = True
 ENABLE_FT_VECTORS = True
 ENABLE_MG_VECTORS = True
 
-start_x = -0.75 #meters
-end_x = 0.75 #meters
+start_x = -0.5 #meters
+end_x = 0.5 #meters
 n_points = 1000 #number of points to simulate
 
 # Constants
@@ -138,10 +138,21 @@ vel_ax.set_ylim(-1.1, 0.3)
 graph_fig = pyplot.figure(figsize=(6, 6))
 graph_ax = graph_fig.add_subplot()
 
+q = []
+for n in range(2, n_points - 2):
+    q.append(mass * g * math.cos(math.asin(points[n][0] / length)) + mass * velocities[n].mag ** 2 / length)
+
+
+k = []
+for n in range(2, n_points - 2):
+    k.append(mass * g * (3 * math.cos(math.asin(points[n][0] / length)) - 2 * math.cos(math.asin(end_x / length))))
+
 graph_ax.plot([p[0] for p in points], [v.mag for v in velocities], label='velocity', color='green')
 graph_ax.plot([p[0] for p in points[2:-2]], [(a[0] ** 2 + a[1] ** 2) ** 0.5 for a in accels[2:]], label='accel', color='orange')
 graph_ax.plot([p[0] for p in points[2:-2]], [(f[0] ** 2 + f[1] ** 2) ** 0.5 for f in forces[2:]], label='FT', color='black')
-graph_ax.plot([p[0] for p in points], [mass * g * (3 - 2 * math.cos(math.asin(end_x)))] * len(points), label='Max FT', color='yellow')
+graph_ax.plot([p[0] for p in points], [mass * g * (3 - 2 * math.cos(math.asin(end_x / length)))] * len(points), label='Max FT', color='yellow')
+graph_ax.plot([p[0] for p in points], [mass * g * math.cos(math.asin(end_x / length))] * len(points), label='Min FT', color='yellow')
+graph_ax.plot([p[0] for p in points[2:-2]], k, label='FT (Stacy Formula)', color='yellow')
 graph_ax.plot([p[0] for p in points], [mass * g] * len(points), label='MG', color='blue')
 graph_ax.legend()
 
