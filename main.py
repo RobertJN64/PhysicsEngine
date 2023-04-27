@@ -24,6 +24,10 @@ ENABLE_ACCEL_VECTORS = True
 ENABLE_FT_VECTORS = True
 ENABLE_MG_VECTORS = True
 
+start_x = -0.75 #meters
+end_x = 0.75 #meters
+n_points = 1000 #number of points to simulate
+
 # Constants
 g = 9.8 #m/s/s
 mass = 1 #kg
@@ -40,10 +44,6 @@ vel_fig = pyplot.figure(figsize=(12, 8))
 vel_ax = vel_fig.add_subplot()
 
 #region STEP 1: Generate Points
-start_x = -0.75 #meters
-end_x = 0.75 #meters
-n_points = 21 #number of points to simulate
-
 assert -start_x < length and end_x < length, "Pendulum too short"
 
 points = []
